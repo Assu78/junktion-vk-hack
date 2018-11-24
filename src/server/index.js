@@ -36,17 +36,17 @@ app.get('/api/friends', (req, res) => {
 app.post('/api/event', (req, res) => {
   const friendList = req.body.ids.toString().replace('[', '').replace(']', '');
   console.log(friendList);
-  // vk.api.call('messages.createChat', {
-  //   user_ids: friendList,
-  //   title: 'Get wasted!!!'
-  // }).then((apiRes) => {
-  // const chatId = apiRes;
-  const chatId = 14;
-  createBot(vk, chatId);
-  res.send({});
-  // }).catch(() => {
-  //   res.status(500);
-  // });
+  vk.api.call('messages.createChat', {
+    user_ids: friendList,
+    title: 'Get wasted!!!'
+  }).then((apiRes) => {
+    const chatId = apiRes;
+    createBot(vk, chatId);
+    res.send({});
+  }).catch((error) => {
+    console.error(error);
+    res.status(500);
+  });
 });
 
 app.use(cors());
